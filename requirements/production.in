@@ -1,0 +1,10 @@
+Django
+python-decouple
+dj-database-url
+psycopg2-binary
+beautifulsoup4
+djangorestframework
+django-filter
+sentry-sdk
+pyyaml
+uritemplate

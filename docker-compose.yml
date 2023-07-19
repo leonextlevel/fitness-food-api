@@ -1,0 +1,73 @@
+version: '3.7'
+services:
+  api:
+    image: fitness-food-api
+    build:
+      context: .
+      args:
+        ENVIRONMENT: ${ENVIRONMENT}
+        USER_ID: ${USER_ID}
+    container_name: fitness-food-api
+    volumes:
+      - ./src/:/usr/src/app/
+      - ./requirements/:/usr/src/requirements/
+      - ./crontabs:/usr/src/cron/crontabs
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    expose:
+      - ${APP_PORT}
+    environment:
+      - APP_PORT
+      - DB_PORT
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - DATABASE_URI
+      - SECRET_KEY
+      - DEBUG
+      - ALLOWED_HOSTS
+      - SENTRY_DSN
+    depends_on:
+      - db
+  db:
+    image: postgres:14.8
+    container_name: fitness-food-db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    ports:
+      - ${DB_PORT}:5432
+  cron:
+    image: fitness-food-api
+    build:
+      context: .
+      args:
+        ENVIRONMENT: ${ENVIRONMENT}
+        USER_ID: ${USER_ID}
+    container_name: fitness-food-cron
+    command: ["bash", "-c", "printenv | grep -v 'no_proxy' >> /etc/environment && \
+                             cron && service cron status && crontab /usr/src/cron/crontabs && \
+                             tail -f /var/log/cron.log"]
+    volumes:
+      - ./src/:/usr/src/app/
+      - ./requirements/:/usr/src/requirements/
+      - ./crontabs:/usr/src/cron/crontabs
+    environment:
+      - APP_PORT
+      - DB_PORT
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - DATABASE_URI
+      - SECRET_KEY
+      - DEBUG
+      - ALLOWED_HOSTS
+      - SENTRY_DSN
+    depends_on:
+      - db
+
+volumes:
+    postgres_data:

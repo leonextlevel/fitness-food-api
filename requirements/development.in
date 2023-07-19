@@ -1,0 +1,9 @@
+-r production.txt
+pip-tools
+pytest-django
+pytest-cov
+pytest-responses
+model_bakery
+flake8
+blue
+isort

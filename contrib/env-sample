@@ -1,0 +1,16 @@
+ENVIRONMENT=development
+USER_ID=1000
+
+APP_PORT=8080
+DB_PORT=5454
+
+POSTGRES_DB=fitness_food
+POSTGRES_USER=fitness_food
+POSTGRES_PASSWORD=fitness_food
+
+DATABASE_URI=postgres://fitness_food:fitness_food@db/fitness_food
+SECRET_KEY=dev_secret_key
+DEBUG=True
+ALLOWED_HOSTS=localhost, 127.0.0.1
+
+SENTRY_DSN=
