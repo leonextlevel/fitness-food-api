@@ -15,7 +15,7 @@ from fitness_food.products.models import Product
 
 
 def test_get_soup_product_detail():
-    url = 'http://test.com/test/123456/test1'
+    url = 'http://test.com/test/123456/test1/'
     with patch('fitness_food.products.facade.urlopen') as mock_urlopen:
         mock_urlopen.return_value = 'html'
         with patch('fitness_food.products.facade.BeautifulSoup') as mock_bs:
@@ -28,11 +28,11 @@ def test_get_products_url_empty():
     assert list(get_products_url([])) == []
 
 
-def test_get_products_url():
+def test_get_products_url(settings):
     mock_li = MagicMock()
     mock_li.a = {'href': '/teste/'}
     assert list(get_products_url([mock_li])) == [
-        'https://world.openfoodfacts.org/teste/'
+        f'{settings.OPEN_FOODFACTS_URL}/teste/'
     ]
 
 

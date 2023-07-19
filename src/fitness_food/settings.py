@@ -155,3 +155,7 @@ sentry_sdk.init(
     send_default_pii=True,
     environment=config('ENVIRONMENT', default='production'),
 )
+
+OPEN_FOODFACTS_URL = config(
+    'OPEN_FOODFACTS_URL', default='https://br.openfoodfacts.org'
+)

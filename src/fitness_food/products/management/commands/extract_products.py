@@ -5,6 +5,7 @@ from urllib.request import urlopen
 
 import sentry_sdk
 from bs4 import BeautifulSoup
+from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from fitness_food.products.facade import (
@@ -16,7 +17,6 @@ from fitness_food.products.facade import (
 
 class Command(BaseCommand):
     help = 'Extract products from Open Food Facts website.'
-    BASE_URL = 'https://world.openfoodfacts.org/'
 
     def handle(self, *args, **options):
         initial_time = datetime.now()
@@ -25,7 +25,7 @@ class Command(BaseCommand):
                 'Extracting products from Open Food Facts website...'
             )
         )
-        html = urlopen(self.BASE_URL)
+        html = urlopen(settings.OPEN_FOODFACTS_URL)
 
         soup = BeautifulSoup(html, 'html.parser')
 

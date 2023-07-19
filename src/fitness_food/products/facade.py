@@ -5,6 +5,7 @@ from urllib.request import urlopen
 
 import sentry_sdk
 from bs4 import BeautifulSoup
+from django.conf import settings
 from django.db.utils import DataError
 
 from fitness_food.products.models import Brand, Category, Packaging, Product
@@ -16,6 +17,8 @@ def get_soup_product_detail(url: str) -> Tuple[int, str, BeautifulSoup]:
     Returns a tuple containing the code, URL, and BeautifulSoup object of
     the product page.
     """
+    if not url.endswith('/'):
+        url += '/'
     code = int(re.search(r'(?<=\/)\d+(?=\/)', url).group())
     html = urlopen(url)
     soup = BeautifulSoup(html, 'html.parser')
@@ -27,7 +30,7 @@ def get_products_url(results: list) -> Sequence[str]:
     Get products url from BeautifulSoup object.
     """
     for li in results:
-        yield urljoin('https://world.openfoodfacts.org', li.a['href'])
+        yield urljoin(settings.OPEN_FOODFACTS_URL, li.a['href'])
 
 
 def get_barcode_from_soup(soup: BeautifulSoup, code: int) -> Union[str, None]:
