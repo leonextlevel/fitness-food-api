@@ -13,7 +13,7 @@ O scraping deve ser executado através de um sistema Cron executado uma vez ao d
 * Pytest
 * Model Bakery (Fixtures do Django)
 * Flake8 e Blue (linters)
-* Isort (Organização )
+* Isort (Organização imports)
 * Swagger (Documentação OpenAPI)
 * BeautifulSoup (Scraping)
 * Docker e docker-compose
