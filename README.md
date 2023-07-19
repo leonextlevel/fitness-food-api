@@ -1,4 +1,4 @@
-# FITNESSE FOOD API
+# FITNESS FOOD API
 
 Projeto com objetivo de extrair dados do site [Open Food Facts](https://world.openfoodfacts.org/) através de
 web scraping e gerar uma API REST de consulta.
